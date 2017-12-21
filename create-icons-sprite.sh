@@ -62,7 +62,7 @@ do
 	icon="$ASSETS_ROOT/decrypted_assets/pokemon_icon_${paddednum}_00.png"
 	if [ -f $icon ]; then
 	    convert $icon \
-	        -trim \
+	        -fuzz 0.5% -trim +repage \
 	        -resize ${MID_SIZE}x${MID_SIZE}\> \
 	        -background none -gravity center -extent ${BORDER_SIZE}x${BORDER_SIZE} \
 	        -background black -alpha background -channel A -blur 0x${STROKE_WIDTH} -level 0,10% \
