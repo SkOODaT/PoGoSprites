@@ -46,7 +46,7 @@ MID_SIZE=$(echo "$ICON_SIZE + ($MAX_EDGE - $ICON_SIZE) * $KEEP_PROPORTIONS" | bc
 MID_SIZE=$(python -c "from math import ceil; print int(ceil($MID_SIZE))")
 (( BORDER_WIDTH = STROKE_WIDTH + 2 ))
 (( BORDER_SIZE = MID_SIZE + 2 * BORDER_WIDTH ))
-echo "Shrinking bigger icons to size ${MID_SIZE}px before assembling the sheet."
+echo "Shrinking bigger icons to size ${MID_SIZE}px, border size: ${BORDER_SIZE}px before assembling the sheet."
 
 # Create/clear output folder
 mkdir -p out
@@ -59,7 +59,7 @@ do
 	icon="$ASSETS_ROOT/decrypted_assets/pokemon_icon_${paddednum}_00.png"
 	if [ -f $icon ]; then
 		convert $icon \
-		    -trim \
+		    -fuzz 0.5% -trim +repage \
 		    -resize ${MID_SIZE}x${MID_SIZE}\> \
 		    -background none -gravity center -extent ${BORDER_SIZE}x${BORDER_SIZE} \
 		    -background black -alpha background -channel A -blur 0x${STROKE_WIDTH} -level 0,10% \
